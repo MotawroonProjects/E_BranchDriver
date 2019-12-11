@@ -1,8 +1,6 @@
 package com.creative.share.apps.e_branchdriver.activities_fragments.activity_balance;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +22,6 @@ import com.creative.share.apps.e_branchdriver.models.CopunModel;
 import com.creative.share.apps.e_branchdriver.models.UserModel;
 import com.creative.share.apps.e_branchdriver.preferences.Preferences;
 import com.creative.share.apps.e_branchdriver.remote.Api;
-import com.creative.share.apps.e_branchdriver.share.Common;
 import com.creative.share.apps.e_branchdriver.tags.Tags;
 
 import java.io.IOException;
@@ -42,7 +39,6 @@ public class BalanceActivity extends AppCompatActivity implements Listeners.Back
     private String lang;
     private Preferences preferences;
     private UserModel userModel;
-    private String copoun_num;
     private List<CopunModel> copunModelList;
     private ChargeAdapter adapter;
     @Override
@@ -54,17 +50,9 @@ public class BalanceActivity extends AppCompatActivity implements Listeners.Back
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_balance);
-        getDataFromIntent();
         initView();
     }
 
-    private void getDataFromIntent() {
-        Intent intent = getIntent();
-        if (intent!=null&&intent.hasExtra("identity"))
-        {
-            copoun_num = intent.getStringExtra("identity");
-        }
-    }
 
     private void initView() {
         copunModelList = new ArrayList<>();
@@ -78,78 +66,14 @@ public class BalanceActivity extends AppCompatActivity implements Listeners.Back
         adapter = new ChargeAdapter(copunModelList,this);
         binding.recView.setLayoutManager(new LinearLayoutManager(this));
         binding.recView.setAdapter(adapter);
-        binding.btnCharge.setOnClickListener(view -> addBalance());
+        binding.btnCharge.setOnClickListener(view -> finish());
         getBalance();
 
     }
-    private void addBalance()
-    {
-        ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
-        dialog.setCancelable(false);
-        dialog.show();
-        try {
 
-            Api.getService(Tags.base_url)
-                    .addBalance(userModel.getId(),copoun_num)
-                    .enqueue(new Callback<CopunModel>() {
-                        @Override
-                        public void onResponse(Call<CopunModel> call, Response<CopunModel> response) {
-                            dialog.dismiss();
-                            if (response.isSuccessful() && response.body() != null) {
-                                Toast.makeText(BalanceActivity.this,getString(R.string.suc), Toast.LENGTH_SHORT).show();
-                                getBalance();
-                            } else {
-
-                                try {
-
-                                    Log.e("error", response.code() + "_" + response.errorBody().string());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-
-                                if (response.code() == 500) {
-                                    Toast.makeText(BalanceActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-
-
-                                } else if (response.code() == 422) {
-                                    Toast.makeText(BalanceActivity.this, R.string.coupon_not_av, Toast.LENGTH_SHORT).show();
-
-
-                                }
-                                else {
-                                    Toast.makeText(BalanceActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-
-
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<CopunModel> call, Throwable t) {
-                            try {
-                                dialog.dismiss();
-                                if (t.getMessage() != null) {
-                                    Log.e("error", t.getMessage());
-                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
-                                        Toast.makeText(BalanceActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(BalanceActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-
-                            } catch (Exception e) {
-                            }
-                        }
-                    });
-        } catch (Exception e) {
-            dialog.dismiss();
-
-        }
-    }
 
     private void getBalance()
     {
-        Log.e("id",userModel.getId()+"_");
         binding.progBar.setVisibility(View.VISIBLE);
         Api.getService(Tags.base_url)
                 .getBalance(userModel.getId())
