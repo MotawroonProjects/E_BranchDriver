@@ -60,7 +60,7 @@
 
     <string name="call">اتصال</string>
     <string name="message">رسالة</string>
-    <string name="location">موقع</string>
+    <string name="location">الموقع</string>
     <string name="share">شارك</string>
     <string name="edit">تعديل</string>
     <string name="price">سعر الطلب</string>
@@ -178,6 +178,18 @@
     <string name="sar">ر.س</string>
     <string name="coupon_not_av">هذا الكوبون غير متاح الان</string>
     <string name="no_rate_found">لا يوجد تقييمات</string>
+    <string name="products">المنتجات</string>
+    <string name="total">الإجمالي :</string>
+    <string name="p_name">الاسم</string>
+    <string name="p_details">التفاصيل</string>
+    <string name="p_amount">الكمية</string>
+    <string name="p_price">السعر</string>
+    <string name="start_order">بدء التنفيذ</string>
+    <string name="order_received">تم إستلام االطلب</string>
+    <string name="order_not_received">مشكلة في الاستلام</string>
+    <string name="delivered">تم التسليم</string>
+    <string name="not_delivered">مشكلة في التسليم</string>
+    <string name="ch_reason">إختر السبب</string>
 
 
 </resources>

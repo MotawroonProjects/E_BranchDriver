@@ -2,9 +2,11 @@ package com.creative.share.apps.e_branchdriver.services;
 
 
 import com.creative.share.apps.e_branchdriver.models.BalanceModel;
+import com.creative.share.apps.e_branchdriver.models.CancelReasonsDataModel;
 import com.creative.share.apps.e_branchdriver.models.CityDataModel;
 import com.creative.share.apps.e_branchdriver.models.CopunModel;
 import com.creative.share.apps.e_branchdriver.models.OrderDataModel;
+import com.creative.share.apps.e_branchdriver.models.OrderModel;
 import com.creative.share.apps.e_branchdriver.models.PlaceGeocodeData;
 import com.creative.share.apps.e_branchdriver.models.PlaceMapDetailsData;
 import com.creative.share.apps.e_branchdriver.models.RateModel;
@@ -124,6 +126,41 @@ public interface Service {
     @FormUrlEncoded
     @POST("api/driver/rating")
     Call<RateModel> getRate(@Field("driver_id") int driver_id
+    );
+
+    @FormUrlEncoded
+    @POST("api/single-order")
+    Call<OrderModel> getSingleOrder(@Field("order_id") int order_id
+    );
+
+    @GET("api/marketCancelReasons")
+    Call<CancelReasonsDataModel> getMarketReasons();
+
+    @GET("api/clientCancelReasons")
+    Call<CancelReasonsDataModel> getClientReasons();
+
+
+    @FormUrlEncoded
+    @POST("api/driver/order/accept")
+    Call<ResponseBody> startOrder(@Field("order_id") int order_id,
+                                  @Field("driver_id") int driver_id
+
+    );
+
+    @FormUrlEncoded
+    @POST("api/driver/order/receive")
+    Call<ResponseBody> receiveOrderFromMarket(@Field("order_id") int order_id,
+                                              @Field("driver_id") int driver_id
+
+    );
+
+    @FormUrlEncoded
+    @POST("api/driver/order/cancel")
+    Call<ResponseBody> sendReason(@Field("order_id") int order_id,
+                                  @Field("driver_id") int driver_id,
+                                  @Field("type") int type,
+                                  @Field("cancel_reason") int cancel_reason
+
     );
 }
 

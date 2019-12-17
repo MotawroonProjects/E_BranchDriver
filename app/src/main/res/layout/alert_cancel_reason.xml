@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="model"
+            type="com.creative.share.apps.e_branchdriver.models.OrderModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16sp"
+        android:paddingRight="16sp"
+        >
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/logo"
+            android:layout_gravity="center_horizontal"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            >
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:text="@string/price"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:minWidth="80dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:background="@drawable/ll_bg_dark_red"
+                android:layout_gravity="center_horizontal"
+                android:padding="8dp"
+                android:singleLine="true"
+                app:layout_constraintStart_toEndOf="@id/tv1"
+                app:layout_constraintTop_toTopOf="@id/tv1"
+                app:layout_constraintBottom_toBottomOf="@id/tv1"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:text='@{model.total_cost+""+@string/sar}'
+
+                />
+
+            <LinearLayout
+                android:id="@+id/llOrderNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:minWidth="80dp"
+                android:minHeight="40dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/tv1"
+                app:layout_constraintTop_toTopOf="@id/tv1"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/ll_bg_dark_gray"
+                android:gravity="center"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:text="@string/order_num"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:text="@{model.order_code}"
+                    android:layout_gravity="center_horizontal"
+                    android:singleLine="true"
+                    />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray4"
+            android:layout_marginTop="10dp"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray4"
+            android:layout_marginTop="10dp"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            >
+            <Button
+                android:id="@+id/btnSend"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:background="@color/red"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:text="@string/send"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                />
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:background="@color/gray5"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:text="@string/cancel"
+
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

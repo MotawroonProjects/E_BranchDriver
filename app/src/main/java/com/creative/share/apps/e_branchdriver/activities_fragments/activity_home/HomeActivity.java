@@ -28,6 +28,7 @@ import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_rate.RateActivity;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_sign_in.SignInActivity;
 import com.creative.share.apps.e_branchdriver.adapters.ViewPagerAdapter;
+import com.creative.share.apps.e_branchdriver.interfaces.Listeners;
 import com.creative.share.apps.e_branchdriver.language.LanguageHelper;
 import com.creative.share.apps.e_branchdriver.models.UserModel;
 import com.creative.share.apps.e_branchdriver.preferences.Preferences;
@@ -42,14 +43,14 @@ import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Listeners.OrderActionListener {
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private ActionBarDrawerToggle toggle;
     private CircleImageView image;
     private TextView tvName;
-    private  Toolbar toolbar;
+    private Toolbar toolbar;
     private TabLayout tab;
     private ViewPager pager;
     private List<Fragment> fragmentList;
@@ -133,6 +134,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    private void updateFragments()
+    {
+        Fragment_Available_Order fragment_available_order = (Fragment_Available_Order) adapter.getItem(0);
+        Fragment_Pending_Order  fragment_pending_order = (Fragment_Pending_Order) adapter.getItem(1);
+        Fragment_Delivered_Order fragment_delivered_order = (Fragment_Delivered_Order) adapter.getItem(2);
+        Fragment_Discarded_Order fragment_discarded_order = (Fragment_Discarded_Order) adapter.getItem(3);
+        Fragment_Stumble_Order fragment_stumble_order = (Fragment_Stumble_Order) adapter.getItem(4);
+
+        fragment_available_order.getOrder(true);
+        fragment_pending_order.getOrder(true);
+        fragment_delivered_order.getOrder(true);
+        fragment_discarded_order.getOrder(true);
+        fragment_stumble_order.getOrder(true);
+
+
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -244,5 +261,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             {
                 finish();
             }
+    }
+
+
+    @Override
+    public void onSuccess() {
+        updateFragments();
     }
 }

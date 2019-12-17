@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="backListener"
+            type="com.creative.share.apps.e_branchdriver.interfaces.Listeners.BackListener" />
+
+        <variable
+            name="lang"
+            type="String" />
+
+        <variable
+            name="model"
+            type="com.creative.share.apps.e_branchdriver.models.TermsModel" />
+
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/gray0"
+        >
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:onClick="@{()->backListener.back()}"
+                android:orientation="horizontal"
+
+                >
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:clickable="false"
+                    android:longClickable="false"
+                    android:padding="8dp"
+                    android:rotation='@{lang.equals("ar")?180:0}'
+                    android:src="@drawable/ic_left_arrow"
+                    android:tint="@color/white" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:clickable="false"
+                    android:longClickable="false"
+                    android:text="@string/back"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabTextColor="@color/gray2"
+            app:tabSelectedTextColor="@color/white"
+            app:tabIndicatorHeight="0dp"
+            app:tabBackground="@drawable/details_tab_indicator"
+
+
+            />
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/tab"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </LinearLayout>
+
+</layout>

@@ -14,9 +14,9 @@ public class OrderModel implements Serializable {
     private double longitude;
     private double latitude;
     private String address;
-    private int status;
+    private String status;
     private String cancel_reason;
-    private String  title;
+    private String title;
     private long order_date;
     private double total_cost;
     private double rating;
@@ -66,7 +66,7 @@ public class OrderModel implements Serializable {
         return address;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
@@ -126,14 +126,15 @@ public class OrderModel implements Serializable {
         return market;
     }
 
-    public class OrderDetails implements Serializable
-    {
+    public class OrderDetails implements Serializable {
         private int id;
         private int order_id;
         private int product_id;
         private int amount;
         private double total_price;
         private int offer_id;
+        private Product product;
+
 
         public int getId() {
             return id;
@@ -158,10 +159,13 @@ public class OrderModel implements Serializable {
         public int getOffer_id() {
             return offer_id;
         }
+
+        public Product getProduct() {
+            return product;
+        }
     }
 
-    public class User implements Serializable
-    {
+    public class User implements Serializable {
         private int id;
         private int user_type;
         private int confirmation_code;
@@ -240,8 +244,7 @@ public class OrderModel implements Serializable {
         }
     }
 
-    public class Market implements Serializable
-    {
+    public class Market implements Serializable {
         private int id;
         private int user_type;
         private int confirmation_code;
@@ -319,5 +322,38 @@ public class OrderModel implements Serializable {
             return rate;
         }
 
+    }
+
+    public class Product implements Serializable {
+        private int id;
+        private String ar_title;
+        private String en_title;
+        private String ar_des;
+        private String en_des;
+        private String image;
+
+        public int getId() {
+            return id;
+        }
+
+        public String getAr_title() {
+            return ar_title;
+        }
+
+        public String getEn_title() {
+            return en_title;
+        }
+
+        public String getAr_des() {
+            return ar_des;
+        }
+
+        public String getEn_des() {
+            return en_des;
+        }
+
+        public String getImage() {
+            return image;
+        }
     }
 }

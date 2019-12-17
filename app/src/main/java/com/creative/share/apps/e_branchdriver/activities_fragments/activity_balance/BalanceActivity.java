@@ -122,7 +122,6 @@ public class BalanceActivity extends AppCompatActivity implements Listeners.Back
 
     private void updateUi(BalanceModel balanceModel)
     {
-        Log.e("balance",balanceModel.getTotal_balance()+"__");
         binding.setModel(balanceModel);
         copunModelList.clear();
         copunModelList.addAll(balanceModel.getPayments());

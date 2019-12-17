@@ -9,6 +9,9 @@
         <variable
             name="lang"
             type="String" />
+        <variable
+            name="local"
+            type="java.util.Locale" />
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -49,15 +52,15 @@
 
                 >
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/ic_user"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     android:text="@string/you"/>
 
             </LinearLayout>
@@ -70,8 +73,9 @@
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/llYou"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toStartOf="@id/llShop"
 
 
                 >
@@ -81,8 +85,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:text='@{model.driver_market_distance+" "+@string/km}'
+                    android:singleLine="true"
+                    android:textSize="10sp"
+                    android:text='@{String.format(local,"%.2f",model.driver_market_distance)+" "+@string/km}'
 
 
                     />
@@ -106,14 +111,16 @@
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/llD1"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toStartOf="@id/llD2"
+
 
 
                 >
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/ic_shop"
 
                     />
@@ -122,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     android:text="@string/store"/>
 
 
@@ -136,8 +143,9 @@
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/llShop"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toStartOf="@id/llClient"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
 
 
                 >
@@ -146,9 +154,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
+                    android:text='@{String.format(local,"%.2f",model.driver_market_distance)+" "+@string/km}'
                     android:textColor="@color/black"
-                    android:textSize="13sp"
-                    android:text='@{model.distance+" "+@string/km}'
+                    android:singleLine="true"
+                    android:textSize="10sp"
 
                     />
 
@@ -172,14 +181,14 @@
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/llD2"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
 
                 >
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/ic_nav_home"
 
                     />
@@ -188,40 +197,42 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:textColor="@color/black"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     android:text="@string/client"/>
 
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llOrderNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
+                android:minWidth="80dp"
+                android:minHeight="40dp"
                 android:orientation="vertical"
-                app:layout_constraintStart_toEndOf="@id/logo"
+                app:layout_constraintStart_toStartOf="@id/logo"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/llYou"
+                app:layout_constraintTop_toBottomOf="@id/logo"
                 app:layout_constraintVertical_bias="1"
                 android:layout_marginBottom="5dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/ll_bg_dark_gray"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:gravity="center"
 
                 >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:text="@string/order_num"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     android:text="@{model.order_code}"
                     android:layout_gravity="center_horizontal"
                     android:singleLine="true"
@@ -238,10 +249,9 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/llYou"
+                app:layout_constraintTop_toTopOf="@id/llOrderNum"
                 app:layout_constraintVertical_bias="1"
                 android:layout_marginBottom="5dp"
-                android:layout_marginTop="15dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
 
@@ -250,7 +260,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:text="@string/price"/>
 
                 <TextView
@@ -259,7 +269,7 @@
                     android:minHeight="40dp"
                     android:minWidth="80dp"
                     android:textColor="@color/white"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     android:text='@{model.total_cost+" "+@string/sar}'
                     android:gravity="center"
                     android:background="@drawable/ll_bg_dark_red"

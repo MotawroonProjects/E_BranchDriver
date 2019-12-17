@@ -29,4 +29,9 @@ public interface Listeners {
     {
         void sendContact(ContactUsModel contactUsModel);
     }
+
+    interface OrderActionListener
+    {
+        void onSuccess();
+    }
 }

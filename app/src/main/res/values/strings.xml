@@ -51,7 +51,7 @@
 
     <string name="next">Next</string>
 
-    <string name="name">name</string>
+    <string name="name">Name</string>
     <string name="call">Call</string>
     <string name="message">Message</string>
     <string name="location">Location</string>
@@ -167,5 +167,17 @@
     <string name="sar">SAR</string>
     <string name="coupon_not_av">Coupon not available</string>
     <string name="no_rate_found">No rate found</string>
+    <string name="products">Products</string>
+    <string name="total">Total :</string>
+    <string name="p_name">Name</string>
+    <string name="p_details">Details</string>
+    <string name="p_amount">Amount</string>
+    <string name="p_price">Price</string>
+    <string name="start_order">Start order</string>
+    <string name="order_received">Received</string>
+    <string name="order_not_received">Order not received</string>
+    <string name="delivered">Delivered</string>
+    <string name="not_delivered">Not delivered</string>
+    <string name="ch_reason">Choose reason</string>
 
 </resources>

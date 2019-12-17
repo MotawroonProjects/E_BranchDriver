@@ -1,5 +1,8 @@
 package com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,8 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.creative.share.apps.e_branchdriver.R;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.HomeActivity;
+import com.creative.share.apps.e_branchdriver.activities_fragments.activity_order_details.OrderDetailsActivity;
 import com.creative.share.apps.e_branchdriver.adapters.OrdersAdapter;
 import com.creative.share.apps.e_branchdriver.databinding.FragmentOrdersBinding;
+import com.creative.share.apps.e_branchdriver.interfaces.Listeners;
 import com.creative.share.apps.e_branchdriver.models.OrderDataModel;
 import com.creative.share.apps.e_branchdriver.models.OrderModel;
 import com.creative.share.apps.e_branchdriver.models.UserModel;
@@ -44,6 +49,14 @@ public class Fragment_Pending_Order extends Fragment {
     private boolean isLoading = false;
     private OrdersAdapter adapter;
     private List<OrderModel> orderModelList;
+    private int pos = -1;
+    private Listeners.OrderActionListener listener;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        listener = (Listeners.OrderActionListener) context;
+    }
 
 
     public static Fragment_Pending_Order newInstance()
@@ -89,18 +102,27 @@ public class Fragment_Pending_Order extends Fragment {
                 }
             }
         });
-        getOrder();
+
+        binding.swipeRefresh.setOnRefreshListener(() -> getOrder(false));
+        getOrder(false);
+
     }
 
 
-    private void getOrder()
+    public void getOrder(boolean show)
     {
 
+        if (show)
+        {
+            binding.swipeRefresh.setRefreshing(true);
+        }
         Api.getService(Tags.base_url)
                 .getPendingOrders(userModel.getId(), 1)
                 .enqueue(new Callback<OrderDataModel>() {
                     @Override
                     public void onResponse(Call<OrderDataModel> call, Response<OrderDataModel> response) {
+                        binding.swipeRefresh.setRefreshing(false);
+
                         binding.progBar.setVisibility(View.GONE);
                         if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
                             orderModelList.clear();
@@ -133,6 +155,8 @@ public class Fragment_Pending_Order extends Fragment {
                     @Override
                     public void onFailure(Call<OrderDataModel> call, Throwable t) {
                         try {
+                            binding.swipeRefresh.setRefreshing(false);
+
                             if (t.getMessage() != null) {
                                 Log.e("error", t.getMessage());
                                 if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
@@ -200,6 +224,45 @@ public class Fragment_Pending_Order extends Fragment {
                     }
                 });
 
+    }
+
+    public void setItemData(OrderModel model, int adapterPosition) {
+        this.pos = adapterPosition;
+        Intent intent = new Intent(activity, OrderDetailsActivity.class);
+        intent.putExtra("data",model);
+        intent.putExtra("type",2);
+
+        startActivityForResult(intent,1);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1&&resultCode== Activity.RESULT_OK&&data!=null)
+        {
+            listener.onSuccess();
+
+            if (data.hasExtra("response"))
+            {
+                if (this.pos!=-1)
+                {
+                    orderModelList.remove(pos);
+                    adapter.notifyItemRemoved(pos);
+                    this.pos = -1;
+
+                    if (orderModelList.size()>0)
+                    {
+                        binding.tvNoOrder.setVisibility(View.GONE);
+                    }else
+                    {
+                        binding.tvNoOrder.setVisibility(View.VISIBLE);
+
+                    }
+                }
+            }
+
+        }
     }
 
 }
