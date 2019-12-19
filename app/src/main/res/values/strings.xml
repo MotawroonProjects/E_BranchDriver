@@ -179,5 +179,11 @@
     <string name="delivered">Delivered</string>
     <string name="not_delivered">Not delivered</string>
     <string name="ch_reason">Choose reason</string>
+    <string name="membership_number">Membership number</string>
+    <string name="bill_photo">Bill photo</string>
+    <string name="order_photo">Order photo</string>
+    <string name="confirm2">Confirm</string>
+    <string name="ch_bill_photo">Choose bill photo</string>
+    <string name="ch_order_photo">Choose order photo</string>
 
 </resources>

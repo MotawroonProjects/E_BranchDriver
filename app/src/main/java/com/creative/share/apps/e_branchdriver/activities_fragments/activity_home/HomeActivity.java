@@ -1,10 +1,12 @@
 package com.creative.share.apps.e_branchdriver.activities_fragments.activity_home;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -25,9 +28,11 @@ import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Discarded_Order;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Pending_Order;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Stumble_Order;
+import com.creative.share.apps.e_branchdriver.activities_fragments.activity_profile.ProfileActivity;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_rate.RateActivity;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_sign_in.SignInActivity;
 import com.creative.share.apps.e_branchdriver.adapters.ViewPagerAdapter;
+import com.creative.share.apps.e_branchdriver.databinding.DialogLanguageBinding;
 import com.creative.share.apps.e_branchdriver.interfaces.Listeners;
 import com.creative.share.apps.e_branchdriver.language.LanguageHelper;
 import com.creative.share.apps.e_branchdriver.models.UserModel;
@@ -157,6 +162,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         switch (id)
         {
             case R.id.profile:
+                if (userModel!=null)
+                {
+                    navigateToProfileActivity();
+
+
+                }else
+                {
+                    Common.CreateDialogAlert(this,getString(R.string.please_sign_in_or_sign_up));
+                }
                 break;
             case R.id.availableOrder:
                 pager.setCurrentItem(0);
@@ -196,6 +210,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 }
                 break;
             case R.id.setting:
+                CreateLangDialog();
                 break;
             case R.id.logout:
                 logout();
@@ -205,18 +220,54 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
-    private void logout() {
 
-        if (userModel==null)
-        {
-            navigateToSignInActivity();
-        }else
-            {
-                preferences.clear(this);
-                navigateToSignInActivity();
+    private void CreateLangDialog() {
+        final AlertDialog dialog = new AlertDialog.Builder(this)
+                .create();
 
-            }
+        DialogLanguageBinding binding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_language, null, false);
+        String lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+        if (lang.equals("ar")) {
+            binding.rbAr.setChecked(true);
+        } else {
+            binding.rbEn.setChecked(true);
 
+        }
+        binding.btnCancel.setOnClickListener((v) ->
+                dialog.dismiss()
+
+        );
+        binding.rbAr.setOnClickListener(view -> {
+            dialog.dismiss();
+            new Handler()
+                    .postDelayed(() -> refreshActivity("ar"), 1000);
+        });
+        binding.rbEn.setOnClickListener(view -> {
+            dialog.dismiss();
+            new Handler()
+                    .postDelayed(() -> refreshActivity("en"), 1000);
+        });
+        dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setView(binding.getRoot());
+        dialog.show();
+    }
+
+    private void refreshActivity(String lang) {
+        preferences.selectedLanguage(this, lang);
+        Paper.book().write("lang", lang);
+        LanguageHelper.setNewLocale(this, lang);
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+
+    }
+
+    private void navigateToProfileActivity() {
+
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
     }
 
     private void navigateToSignInActivity() {
@@ -249,6 +300,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, ContactUsActivity.class);
             startActivity(intent);
         },200);
+
+    }
+
+    private void logout() {
+
+        if (userModel==null)
+        {
+            navigateToSignInActivity();
+        }else
+        {
+            preferences.clear(this);
+            navigateToSignInActivity();
+
+        }
 
     }
 

@@ -162,6 +162,17 @@ public interface Service {
                                   @Field("cancel_reason") int cancel_reason
 
     );
+
+
+    @Multipart
+    @POST("api/driver/order/end")
+    Call<ResponseBody> endOrder(@Part("membership_code") RequestBody membership_code,
+                                @Part("order_id") RequestBody order_id,
+                                @Part("driver_id") RequestBody driver_id,
+                                @Part MultipartBody.Part image1,
+                                @Part MultipartBody.Part image2
+
+    );
 }
 
 

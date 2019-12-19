@@ -190,6 +190,12 @@
     <string name="delivered">تم التسليم</string>
     <string name="not_delivered">مشكلة في التسليم</string>
     <string name="ch_reason">إختر السبب</string>
+    <string name="membership_number">رقم العضوية</string>
+    <string name="bill_photo">صورة الفاتورة</string>
+    <string name="order_photo">صورة الطلب</string>
+    <string name="confirm2">تأكيد التسليم</string>
+    <string name="ch_bill_photo">إختر صورة الفاتورة</string>
+    <string name="ch_order_photo">إختر صورة الطلب</string>
 
 
 </resources>

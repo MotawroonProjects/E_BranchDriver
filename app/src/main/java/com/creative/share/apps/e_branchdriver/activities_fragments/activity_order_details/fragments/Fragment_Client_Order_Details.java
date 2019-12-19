@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.creative.share.apps.e_branchdriver.R;
+import com.creative.share.apps.e_branchdriver.activities_fragments.activity_end_order.EndOrderActivity;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_order_details.OrderDetailsActivity;
 import com.creative.share.apps.e_branchdriver.adapters.ProductDetailsAdapter;
 import com.creative.share.apps.e_branchdriver.adapters.ReasonsAdapter;
@@ -130,6 +131,12 @@ public class Fragment_Client_Order_Details extends Fragment implements OnMapRead
 
         binding.btnPerform.setOnClickListener(view -> startOrder());
         binding.btnMarketSuccess.setOnClickListener(view -> driverReceiveOrderFromMarket());
+
+        binding.btnClientSuccess.setOnClickListener(view -> {
+            Intent intent = new Intent(activity, EndOrderActivity.class);
+            intent.putExtra("data",orderModel);
+            startActivityForResult(intent,1);
+        });
     }
 
 
@@ -536,5 +543,17 @@ public class Fragment_Client_Order_Details extends Fragment implements OnMapRead
     public void setItemData(CancelReasonsDataModel.CancelModel model) {
         this.cancelModel = model;
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1&&resultCode==Activity.RESULT_OK&&data!=null)
+        {
+            Intent intent = activity.getIntent();
+            intent.putExtra("response",true);
+            activity.setResult(Activity.RESULT_OK,intent);
+            activity.finish();
+        }
     }
 }

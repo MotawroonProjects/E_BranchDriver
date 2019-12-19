@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="backListener"
+            type="com.creative.share.apps.e_branchdriver.interfaces.Listeners.BackListener" />
+
+        <variable
+            name="lang"
+            type="String" />
+
+        <variable
+            name="model"
+            type="com.creative.share.apps.e_branchdriver.models.OrderModel" />
+
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/gray0"
+        >
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:onClick="@{()->backListener.back()}"
+                android:orientation="horizontal"
+
+                >
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:clickable="false"
+                    android:longClickable="false"
+                    android:padding="8dp"
+                    android:rotation='@{lang.equals("ar")?180:0}'
+                    android:src="@drawable/ic_left_arrow"
+                    android:tint="@color/white" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:clickable="false"
+                    android:longClickable="false"
+                    android:text="@string/back"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:fillViewport="true"
+            android:visibility="visible"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="30dp"
+                    android:padding="16dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:background="@drawable/dark_bg"
+
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            android:gravity="center"
+                            android:text="@string/order_num"
+                            android:layout_gravity="center_horizontal"
+
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            android:gravity="center"
+                            android:text="@{model.order_code}"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="5dp"
+
+                            />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        android:gravity="center"
+                        android:text='@{model.total_cost+" "+@string/sar}'
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+
+
+
+
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:text="@string/membership_number"
+                        android:layout_marginTop="10dp"
+
+                        />
+                    <EditText
+                        android:id="@+id/edtMembership"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:background="@drawable/rounder_gray"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="30dp"
+                        >
+                        <Button
+                            android:id="@+id/btnBill"
+                            android:layout_width="150dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/btn_login"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:text="@string/bill_photo"
+
+                            />
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/imageBill"
+                            android:layout_width="120dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginEnd="40dp"
+                            app:riv_corner_radius="8dp"
+                            android:background="@color/gray2"
+                            app:riv_mutate_background="true"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="30dp"
+                        >
+                        <Button
+                            android:id="@+id/btnOrder"
+                            android:layout_width="150dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/btn_login"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:text="@string/order_photo"
+
+                            />
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/imageOrder"
+                            android:layout_width="120dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginEnd="40dp"
+                            app:riv_corner_radius="8dp"
+                            android:background="@color/gray2"
+                            app:riv_mutate_background="true"
+                            />
+                    </LinearLayout>
+
+
+                    <Button
+                        android:id="@+id/btnDon"
+                        android:layout_width="150dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/dark_bg"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:text="@string/confirm2"
+                        android:layout_marginTop="30dp"
+
+                        />
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+
+
+    </LinearLayout>
+
+</layout>
