@@ -35,18 +35,34 @@ import com.creative.share.apps.e_branchdriver.adapters.ViewPagerAdapter;
 import com.creative.share.apps.e_branchdriver.databinding.DialogLanguageBinding;
 import com.creative.share.apps.e_branchdriver.interfaces.Listeners;
 import com.creative.share.apps.e_branchdriver.language.LanguageHelper;
+import com.creative.share.apps.e_branchdriver.models.OrderModel;
 import com.creative.share.apps.e_branchdriver.models.UserModel;
 import com.creative.share.apps.e_branchdriver.preferences.Preferences;
+import com.creative.share.apps.e_branchdriver.remote.Api;
 import com.creative.share.apps.e_branchdriver.share.Common;
+import com.creative.share.apps.e_branchdriver.tags.Tags;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Listeners.OrderActionListener {
 
@@ -103,6 +119,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         {
             tvName.setText(userModel.getFull_name());
             Log.e("id",userModel.getId()+"__");
+            EventBus.getDefault().register(this);
+            updateToken();
         }
 
         tab.setupWithViewPager(pager);
@@ -333,4 +351,72 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void onSuccess() {
         updateFragments();
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this))
+        {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void ListenNotificationChange(OrderModel order_model)
+    {
+            if(fragmentList!=null){
+                Fragment_Available_Order fragment_finshied_order= (Fragment_Available_Order) fragmentList.get(0);
+                new Handler()
+                        .postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                fragment_finshied_order.getOrder(false);
+                                pager.setCurrentItem(1);}
+                        },1);
+            }}
+    private void updateToken() {
+        FirebaseInstanceId.getInstance()
+                .getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (task.isSuccessful()) {
+                            String token = task.getResult().getToken();
+                            //Log.e("s",token);
+                            Api.getService(Tags.base_url)
+                                    .updateToken(userModel.getId(), token,1)
+                                    .enqueue(new Callback<ResponseBody>() {
+                                        @Override
+                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                                            if (response.isSuccessful()) {
+                                                try {
+                                                    Log.e("Success", "token updated");
+                                                } catch (Exception e) {
+                                                    //  e.printStackTrace();
+                                                }
+                                            }
+                                            else {
+                                                try {
+                                                    Log.e("error",response.code()+"_"+response.errorBody().string());
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                            try {
+                                                Log.e("Error", t.getMessage());
+                                            } catch (Exception e) {
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                });
+    }
+
 }

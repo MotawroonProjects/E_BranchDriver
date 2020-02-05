@@ -30,6 +30,10 @@ public class OrderModel implements Serializable {
     private User user;
     private Market market;
 
+    public OrderModel(String status) {
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }

@@ -196,6 +196,7 @@
     <string name="confirm2">تأكيد التسليم</string>
     <string name="ch_bill_photo">إختر صورة الفاتورة</string>
     <string name="ch_order_photo">إختر صورة الطلب</string>
+    <string name="market_send_order">لقد ارسل المتجر طلب اليك</string>
 
 
 </resources>

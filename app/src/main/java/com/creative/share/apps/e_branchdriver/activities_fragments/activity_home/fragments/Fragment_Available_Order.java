@@ -114,7 +114,8 @@ public class Fragment_Available_Order extends Fragment {
         {
             binding.swipeRefresh.setRefreshing(true);
         }
-
+        orderModelList.clear();
+        adapter.notifyDataSetChanged();
         Api.getService(Tags.base_url)
                 .getAvailableOrders(userModel.getId(), 1)
                 .enqueue(new Callback<OrderDataModel>() {
