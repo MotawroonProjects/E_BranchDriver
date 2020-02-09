@@ -139,7 +139,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
             int status=Integer.parseInt(map.get("status"));
             int order_id=Integer.parseInt(map.get("id"));
-            title=getResources().getString(R.string.order_num)+" "+order_id;
+            title=getResources().getString(R.string.order_num)+order_id;
             OrderModel orderModel=new OrderModel(status+"");
             if(status==1){
                 content=getResources().getString(R.string.market_send_order)+ " "+order_id;
@@ -147,7 +147,7 @@ public class FireBaseMessaging extends FirebaseMessagingService {
 
             ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
             String current_class =activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
-            if (current_class.equals("com.creative.share.apps.e_branchdriver.activities_fragments.activity_home")){
+            if (current_class.equals("com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.HomeActivity")){
                 EventBus.getDefault().post(orderModel);
 
 
