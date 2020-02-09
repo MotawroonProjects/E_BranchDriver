@@ -370,7 +370,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                             @Override
                             public void run() {
                                 fragment_finshied_order.getOrder(false);
-                                pager.setCurrentItem(1);}
+                                pager.setCurrentItem(0);}
                         },1);
             }}
     private void updateToken() {
