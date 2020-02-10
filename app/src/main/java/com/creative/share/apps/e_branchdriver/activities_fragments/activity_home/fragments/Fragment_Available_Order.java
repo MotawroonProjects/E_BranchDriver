@@ -243,10 +243,15 @@ public class Fragment_Available_Order extends Fragment {
             {
                 if (this.pos!=-1)
                 {
-                    listener.onSuccess();
-                    orderModelList.remove(pos);
-                    adapter.notifyItemRemoved(pos);
-                    this.pos = -1;
+                  try {
+                      listener.onSuccess();
+                      orderModelList.remove(pos);
+                      adapter.notifyItemRemoved(pos);
+                      this.pos = -1;
+                  }catch (Exception e){
+                      Log.e("error","");
+                  }
+
 
                     if (orderModelList.size()>0)
                     {
