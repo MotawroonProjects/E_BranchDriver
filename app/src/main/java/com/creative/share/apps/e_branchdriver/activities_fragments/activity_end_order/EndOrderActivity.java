@@ -164,11 +164,15 @@ public class EndOrderActivity extends AppCompatActivity implements Listeners.Bac
                                     Toast.makeText(EndOrderActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
 
 
-                                }else {
-                                    Toast.makeText(EndOrderActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                }else if (response.code() == 406){
+                                    Toast.makeText(EndOrderActivity.this, R.string.wrong_member, Toast.LENGTH_LONG).show();
 
 
-                                }
+                                }else
+                                    {
+                                        Toast.makeText(EndOrderActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+                                    }
 
                                 try {
                                     Log.e("error",response.code()+"_"+response.errorBody().string());

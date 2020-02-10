@@ -49,7 +49,7 @@ public class Fragment_Available_Order extends Fragment {
     private boolean isLoading = false;
     private OrdersAdapter adapter;
     private List<OrderModel> orderModelList;
-    private int pos=-1;
+    private int pos = -1;
     private Listeners.OrderActionListener listener;
 
 
@@ -59,8 +59,7 @@ public class Fragment_Available_Order extends Fragment {
         listener = (Listeners.OrderActionListener) context;
     }
 
-    public static Fragment_Available_Order newInstance()
-    {
+    public static Fragment_Available_Order newInstance() {
         return new Fragment_Available_Order();
     }
 
@@ -68,7 +67,7 @@ public class Fragment_Available_Order extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_orders,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_orders, container, false);
         initView();
         return binding.getRoot();
     }
@@ -78,9 +77,9 @@ public class Fragment_Available_Order extends Fragment {
         orderModelList = new ArrayList<>();
         activity = (HomeActivity) getActivity();
         userModel = preferences.getUserData(activity);
-        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         binding.recView.setLayoutManager(new LinearLayoutManager(activity));
-        adapter = new OrdersAdapter(orderModelList,activity,this);
+        adapter = new OrdersAdapter(orderModelList, activity, this);
         binding.recView.setAdapter(adapter);
 
         binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -89,7 +88,7 @@ public class Fragment_Available_Order extends Fragment {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
                     int total_items = adapter.getItemCount();
-                    int lastVisibleItem = ((LinearLayoutManager)(binding.recView.getLayoutManager())).findLastCompletelyVisibleItemPosition();
+                    int lastVisibleItem = ((LinearLayoutManager) (binding.recView.getLayoutManager())).findLastCompletelyVisibleItemPosition();
 
                     if (lastVisibleItem > 5 && lastVisibleItem == (total_items - 2) && !isLoading) {
                         isLoading = true;
@@ -107,11 +106,9 @@ public class Fragment_Available_Order extends Fragment {
     }
 
 
-    public void getOrder(boolean show)
-    {
+    public void getOrder(boolean show) {
 
-        if (show)
-        {
+        if (show) {
             binding.swipeRefresh.setRefreshing(true);
         }
         orderModelList.clear();
@@ -172,8 +169,7 @@ public class Fragment_Available_Order extends Fragment {
                 });
     }
 
-    private void loadMore(int page)
-    {
+    private void loadMore(int page) {
         Api.getService(Tags.base_url)
                 .getAvailableOrders(userModel.getId(), page)
                 .enqueue(new Callback<OrderDataModel>() {
@@ -227,40 +223,31 @@ public class Fragment_Available_Order extends Fragment {
     }
 
     public void setItemData(OrderModel model, int adapterPosition) {
-        this.pos =adapterPosition;
+        this.pos = adapterPosition;
         Intent intent = new Intent(activity, OrderDetailsActivity.class);
-        intent.putExtra("data",model);
-        intent.putExtra("type",1);
-        startActivityForResult(intent,1);
+        intent.putExtra("data", model);
+        intent.putExtra("type", 1);
+        startActivityForResult(intent, 1);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1&&resultCode== Activity.RESULT_OK&&data!=null)
-        {
-            if (data.hasExtra("response"))
-            {
-                if (this.pos!=-1)
-                {
-                  try {
-                      listener.onSuccess();
-                      orderModelList.remove(pos);
-                      adapter.notifyItemRemoved(pos);
-                      this.pos = -1;
-                  }catch (Exception e){
-                      Log.e("error","");
-                  }
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+            if (data.hasExtra("response")) {
+                if (this.pos != -1) {
+                    listener.onSuccess();
+                    orderModelList.remove(pos);
+                    adapter.notifyItemRemoved(pos);
+                    this.pos = -1;
 
 
-                    if (orderModelList.size()>0)
-                    {
+                    if (orderModelList.size() > 0) {
                         binding.tvNoOrder.setVisibility(View.GONE);
-                    }else
-                        {
-                            binding.tvNoOrder.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.tvNoOrder.setVisibility(View.VISIBLE);
 
-                        }
+                    }
                 }
             }
 
