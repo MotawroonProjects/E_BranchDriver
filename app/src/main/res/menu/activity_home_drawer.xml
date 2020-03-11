@@ -23,6 +23,12 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_checklist"
         />
+    <item android:id="@+id/notDelivered"
+        android:orderInCategory="400"
+        android:title="@string/comming_order"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_checklist"
+        />
     <item android:id="@+id/delivered"
         android:orderInCategory="400"
         android:title="@string/delivered_order"

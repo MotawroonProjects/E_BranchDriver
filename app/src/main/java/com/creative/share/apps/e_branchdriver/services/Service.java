@@ -100,6 +100,13 @@ public interface Service {
     );
 
     @FormUrlEncoded
+    @POST("api/driver/orders/after-compete")
+    Call<OrderDataModel> getNotDeliveredOrders(@Field("driver_id") int user_id,
+                                            @Field("page") int page
+    );
+
+
+    @FormUrlEncoded
     @POST("api/driver/orders/discarded")
     Call<OrderDataModel> getDiscardedOrders(@Field("driver_id") int user_id,
                                             @Field("page") int page

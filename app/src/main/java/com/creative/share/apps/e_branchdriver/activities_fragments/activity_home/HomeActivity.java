@@ -26,6 +26,7 @@ import com.creative.share.apps.e_branchdriver.activities_fragments.activity_cont
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Available_Order;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Delivered_Order;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Discarded_Order;
+import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Not_Delivered_Order;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Pending_Order;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Stumble_Order;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_profile.ProfileActivity;
@@ -143,12 +144,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void addFragments_Titles() {
         fragmentList.add(Fragment_Available_Order.newInstance());
         fragmentList.add(Fragment_Pending_Order.newInstance());
+        fragmentList.add(Fragment_Not_Delivered_Order.newInstance());
         fragmentList.add(Fragment_Delivered_Order.newInstance());
         fragmentList.add(Fragment_Discarded_Order.newInstance());
         fragmentList.add(Fragment_Stumble_Order.newInstance());
 
         titles.add(getString(R.string.available_order));
         titles.add(getString(R.string.pending_order));
+        titles.add(getString(R.string.comming_order));
         titles.add(getString(R.string.delivered_order));
         titles.add(getString(R.string.discarded));
         titles.add(getString(R.string.stumble));
@@ -161,12 +164,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     {
         Fragment_Available_Order fragment_available_order = (Fragment_Available_Order) adapter.getItem(0);
         Fragment_Pending_Order  fragment_pending_order = (Fragment_Pending_Order) adapter.getItem(1);
-        Fragment_Delivered_Order fragment_delivered_order = (Fragment_Delivered_Order) adapter.getItem(2);
-        Fragment_Discarded_Order fragment_discarded_order = (Fragment_Discarded_Order) adapter.getItem(3);
-        Fragment_Stumble_Order fragment_stumble_order = (Fragment_Stumble_Order) adapter.getItem(4);
+        Fragment_Not_Delivered_Order fragment_not_delivered_order = (Fragment_Not_Delivered_Order) adapter.getItem(2);
+        Fragment_Delivered_Order fragment_delivered_order = (Fragment_Delivered_Order) adapter.getItem(3);
+        Fragment_Discarded_Order fragment_discarded_order = (Fragment_Discarded_Order) adapter.getItem(4);
+        Fragment_Stumble_Order fragment_stumble_order = (Fragment_Stumble_Order) adapter.getItem(5);
 
         fragment_available_order.getOrder(true);
         fragment_pending_order.getOrder(true);
+        fragment_not_delivered_order.getOrder(true);
         fragment_delivered_order.getOrder(true);
         fragment_discarded_order.getOrder(true);
         fragment_stumble_order.getOrder(true);
@@ -195,18 +200,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.pending:
                 pager.setCurrentItem(1);
-
+                break;
+            case R.id.notDelivered:
+                pager.setCurrentItem(2);
                 break;
             case R.id.delivered:
-                pager.setCurrentItem(2);
-
-                break;
-            case R.id.discard:
                 pager.setCurrentItem(3);
 
                 break;
-            case R.id.stumble:
+            case R.id.discard:
                 pager.setCurrentItem(4);
+
+                break;
+            case R.id.stumble:
+                pager.setCurrentItem(5);
 
                 break;
             case R.id.charge:

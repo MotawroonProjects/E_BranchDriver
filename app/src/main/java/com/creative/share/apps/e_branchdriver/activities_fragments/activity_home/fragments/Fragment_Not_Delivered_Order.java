@@ -40,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_Available_Order extends Fragment {
+public class Fragment_Not_Delivered_Order extends Fragment {
     private HomeActivity activity;
     private FragmentOrdersBinding binding;
     private UserModel userModel;
@@ -49,9 +49,8 @@ public class Fragment_Available_Order extends Fragment {
     private boolean isLoading = false;
     private OrdersAdapter adapter;
     private List<OrderModel> orderModelList;
-    private int pos = -1;
+    private int pos=-1;
     private Listeners.OrderActionListener listener;
-
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -59,15 +58,16 @@ public class Fragment_Available_Order extends Fragment {
         listener = (Listeners.OrderActionListener) context;
     }
 
-    public static Fragment_Available_Order newInstance() {
-        return new Fragment_Available_Order();
+    public static Fragment_Not_Delivered_Order newInstance()
+    {
+        return new Fragment_Not_Delivered_Order();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_orders, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_orders,container,false);
         initView();
         return binding.getRoot();
     }
@@ -77,9 +77,9 @@ public class Fragment_Available_Order extends Fragment {
         orderModelList = new ArrayList<>();
         activity = (HomeActivity) getActivity();
         userModel = preferences.getUserData(activity);
-        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         binding.recView.setLayoutManager(new LinearLayoutManager(activity));
-        adapter = new OrdersAdapter(orderModelList, activity, this);
+        adapter = new OrdersAdapter(orderModelList,activity,this);
         binding.recView.setAdapter(adapter);
 
         binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -88,7 +88,7 @@ public class Fragment_Available_Order extends Fragment {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
                     int total_items = adapter.getItemCount();
-                    int lastVisibleItem = ((LinearLayoutManager) (binding.recView.getLayoutManager())).findLastCompletelyVisibleItemPosition();
+                    int lastVisibleItem = ((LinearLayoutManager)(binding.recView.getLayoutManager())).findLastCompletelyVisibleItemPosition();
 
                     if (lastVisibleItem > 5 && lastVisibleItem == (total_items - 2) && !isLoading) {
                         isLoading = true;
@@ -106,15 +106,15 @@ public class Fragment_Available_Order extends Fragment {
     }
 
 
-    public void getOrder(boolean show) {
+    public void getOrder(boolean show)
+    {
 
-        if (show) {
+        if (show)
+        {
             binding.swipeRefresh.setRefreshing(true);
         }
-        orderModelList.clear();
-        adapter.notifyDataSetChanged();
         Api.getService(Tags.base_url)
-                .getAvailableOrders(userModel.getId(), 1)
+                .getNotDeliveredOrders(userModel.getId(), 1)
                 .enqueue(new Callback<OrderDataModel>() {
                     @Override
                     public void onResponse(Call<OrderDataModel> call, Response<OrderDataModel> response) {
@@ -169,9 +169,10 @@ public class Fragment_Available_Order extends Fragment {
                 });
     }
 
-    private void loadMore(int page) {
+    private void loadMore(int page)
+    {
         Api.getService(Tags.base_url)
-                .getAvailableOrders(userModel.getId(), page)
+                .getNotDeliveredOrders(userModel.getId(), page)
                 .enqueue(new Callback<OrderDataModel>() {
                     @Override
                     public void onResponse(Call<OrderDataModel> call, Response<OrderDataModel> response) {
@@ -225,29 +226,31 @@ public class Fragment_Available_Order extends Fragment {
     public void setItemData(OrderModel model, int adapterPosition) {
         this.pos = adapterPosition;
         Intent intent = new Intent(activity, OrderDetailsActivity.class);
-        intent.putExtra("data", model);
-        intent.putExtra("type", 1);
-        startActivityForResult(intent, 1);
+        intent.putExtra("data",model);
+        intent.putExtra("type",3);
+        startActivityForResult(intent,1);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
-            if (data.hasExtra("response")) {
-                if (this.pos != -1) {
+        if (requestCode==1&&resultCode== Activity.RESULT_OK&&data!=null)
+        {
+            if (data.hasExtra("response"))
+            {
+                listener.onSuccess();
+
+                if (this.pos!=-1)
+                {
                     orderModelList.remove(pos);
                     adapter.notifyItemRemoved(pos);
                     this.pos = -1;
-                    Log.e("pos",pos+"");
-                    Log.e("list",orderModelList.size()+"");
 
-                    listener.onSuccess();
-
-
-                    if (orderModelList.size() > 0) {
+                    if (orderModelList.size()>0)
+                    {
                         binding.tvNoOrder.setVisibility(View.GONE);
-                    } else {
+                    }else
+                    {
                         binding.tvNoOrder.setVisibility(View.VISIBLE);
 
                     }
@@ -256,4 +259,5 @@ public class Fragment_Available_Order extends Fragment {
 
         }
     }
+
 }

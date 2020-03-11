@@ -15,6 +15,7 @@ import com.creative.share.apps.e_branchdriver.R;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Available_Order;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Delivered_Order;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Discarded_Order;
+import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Not_Delivered_Order;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Pending_Order;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Stumble_Order;
 import com.creative.share.apps.e_branchdriver.databinding.OrderRowBinding;
@@ -88,6 +89,10 @@ public class OrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         {
                             Fragment_Pending_Order fragment_pending_order = (Fragment_Pending_Order) fragment;
                             fragment_pending_order.setItemData(model,holder.getAdapterPosition());
+                        }else if (fragment instanceof Fragment_Not_Delivered_Order)
+                        {
+                            Fragment_Not_Delivered_Order fragment_not_delivered_order = (Fragment_Not_Delivered_Order) fragment;
+                            fragment_not_delivered_order.setItemData(model,holder.getAdapterPosition());
                         }else if (fragment instanceof Fragment_Delivered_Order)
                         {
                             Fragment_Delivered_Order fragment_delivered_order = (Fragment_Delivered_Order) fragment;
