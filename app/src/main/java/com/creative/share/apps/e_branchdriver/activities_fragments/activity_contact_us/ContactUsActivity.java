@@ -1,7 +1,11 @@
 package com.creative.share.apps.e_branchdriver.activities_fragments.activity_contact_us;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -11,12 +15,20 @@ import com.creative.share.apps.e_branchdriver.databinding.ActivityContactUsBindi
 import com.creative.share.apps.e_branchdriver.interfaces.Listeners;
 import com.creative.share.apps.e_branchdriver.language.LanguageHelper;
 import com.creative.share.apps.e_branchdriver.models.ContactUsModel;
+import com.creative.share.apps.e_branchdriver.remote.Api;
+import com.creative.share.apps.e_branchdriver.share.Common;
+import com.creative.share.apps.e_branchdriver.tags.Tags;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class ContactUsActivity extends AppCompatActivity implements Listeners.BackListener , Listeners.ContactListener {
+public class ContactUsActivity extends AppCompatActivity implements Listeners.BackListener, Listeners.ContactListener {
     private ActivityContactUsBinding binding;
     private String lang;
     private ContactUsModel contactUsModel;
@@ -55,44 +67,33 @@ public class ContactUsActivity extends AppCompatActivity implements Listeners.Ba
     }
 
     @Override
-    public void sendContact(ContactUsModel contactUsModel)
-    {
+    public void sendContact(ContactUsModel contactUsModel) {
 
 
-        if (contactUsModel.isDataValid(this))
-        {
-            /*try {
+        if (contactUsModel.isDataValid(this)) {
+            try {
                 ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
                 dialog.setCancelable(false);
                 dialog.show();
                 Api.getService(Tags.base_url)
-                        .sendContact(contactUsModel.getName(),contactUsModel.getEmail(),contactUsModel.getSubject(),contactUsModel.getMessage())
+                        .sendContact(contactUsModel.getName(), contactUsModel.getEmail(), contactUsModel.getSubject(), contactUsModel.getMessage())
                         .enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                dialog.dismiss();
-                                if (response.isSuccessful() ) {
-                                    Toast.makeText(ContactUsActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+                                if (response.isSuccessful()) {
                                     finish();
+                                    Toast.makeText(ContactUsActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
                                 } else {
-                                    if (response.code() == 422) {
-                                        Toast.makeText(ContactUsActivity.this,getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                                    } else if (response.code() == 500) {
-                                        Toast.makeText(ContactUsActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
 
-                                    }else
-                                    {
-                                        Toast.makeText(ContactUsActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-
-                                        try {
-
-                                            Log.e("error",response.code()+"_"+response.errorBody().string());
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
+                                    try {
+                                        dialog.dismiss();
+                                        Log.e("error", response.code() + "_" + response.errorBody().string());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
                                     }
-
+                                    Toast.makeText(ContactUsActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                                 }
+
                             }
 
                             @Override
@@ -107,13 +108,13 @@ public class ContactUsActivity extends AppCompatActivity implements Listeners.Ba
                                             Toast.makeText(ContactUsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
-
                                 } catch (Exception e) {
+
                                 }
                             }
                         });
             } catch (Exception e) {
-            }*/
+            }
         }
 
     }

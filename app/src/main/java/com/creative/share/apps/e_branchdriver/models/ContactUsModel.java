@@ -7,8 +7,7 @@ import android.util.Patterns;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.ObservableField;
-import androidx.databinding.library.baseAdapters.BR;
-
+import com.creative.share.apps.e_branchdriver.BR;
 import com.creative.share.apps.e_branchdriver.R;
 
 import java.io.Serializable;
