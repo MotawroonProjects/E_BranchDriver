@@ -188,6 +188,13 @@ public interface Service {
 
             @Field("software_type") int software_type
     );
+    @FormUrlEncoded
+    @POST("api/contact-us")
+    Call<ResponseBody> sendContact(@Field("name") String name,
+                                   @Field("email") String email,
+                                   @Field("phone") String phone,
+                                   @Field("message") String message
+    );
 }
 
 
