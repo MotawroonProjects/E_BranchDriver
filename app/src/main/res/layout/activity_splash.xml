@@ -13,8 +13,8 @@
         tools:context=".activities_fragments.activity_splash.SplashActivity">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             android:padding="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

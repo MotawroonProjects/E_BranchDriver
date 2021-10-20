@@ -96,8 +96,7 @@ public class ChargeActivity extends AppCompatActivity implements Listeners.BackL
                         public void onResponse(Call<CopunModel> call, Response<CopunModel> response) {
                             dialog.dismiss();
                             if (response.isSuccessful() && response.body() != null) {
-                                Intent intent = new Intent(ChargeActivity.this, BalanceActivity.class);
-                                startActivity(intent);
+                                finish();
                                 Toast.makeText(ChargeActivity.this,getString(R.string.suc), Toast.LENGTH_SHORT).show();
                             } else {
 

@@ -54,7 +54,18 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_balance"
         />
-
+    <item android:id="@+id/terms"
+        android:orderInCategory="800"
+        android:title="@string/terms_and_conditions"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_info"
+        />
+    <item android:id="@+id/about"
+        android:orderInCategory="800"
+        android:title="@string/about"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_info"
+        />
     <item android:id="@+id/contact"
         android:orderInCategory="800"
         android:title="@string/contact_us"

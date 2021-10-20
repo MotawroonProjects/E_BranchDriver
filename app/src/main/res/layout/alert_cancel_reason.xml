@@ -131,7 +131,7 @@
                 android:background="@color/red"
                 android:textColor="@color/white"
                 android:textSize="15sp"
-                android:text="@string/send"
+                android:text="@string/send2"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 />

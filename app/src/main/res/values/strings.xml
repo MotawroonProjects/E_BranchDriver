@@ -187,6 +187,7 @@
     <string name="ch_order_photo">Choose order photo</string>
     <string name="market_send_order">Market Send Order to You</string>
     <string name="wrong_member">Wrong membership</string>
-    <string name="comming_order">جارى التسليم</string>
+    <string name="comming_order">Comming order</string>
+    <string name="send2">Done</string>
 
 </resources>

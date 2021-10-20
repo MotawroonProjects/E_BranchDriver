@@ -199,6 +199,7 @@
     <string name="market_send_order">لقد ارسل المتجر طلب اليك</string>
     <string name="wrong_member">رقم العضوية خطأ</string>
     <string name="comming_order">جارى التسليم</string>
+    <string name="send2">أتمام العملية</string>
 
 
 </resources>

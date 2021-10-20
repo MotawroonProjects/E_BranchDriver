@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.creative.share.apps.e_branchdriver.R;
+import com.creative.share.apps.e_branchdriver.activities_fragments.activity_balance.BalanceActivity;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_charge.ChargeActivity;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_contact_us.ContactUsActivity;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home.fragments.Fragment_Available_Order;
@@ -32,6 +33,7 @@ import com.creative.share.apps.e_branchdriver.activities_fragments.activity_home
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_profile.ProfileActivity;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_rate.RateActivity;
 import com.creative.share.apps.e_branchdriver.activities_fragments.activity_sign_in.SignInActivity;
+import com.creative.share.apps.e_branchdriver.activities_fragments.activity_terms.TermsActivity;
 import com.creative.share.apps.e_branchdriver.adapters.ViewPagerAdapter;
 import com.creative.share.apps.e_branchdriver.databinding.DialogLanguageBinding;
 import com.creative.share.apps.e_branchdriver.interfaces.Listeners;
@@ -220,10 +222,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 navigateToBalanceActivity();
                 break;
+
             case R.id.contact:
                 navigateToContactUsActivity();
                 break;
-
+            case R.id.terms:
+                navigateTermsActivity();
+                break;
+            case R.id.about:
+                navigateToAboutActivity();
+                break;
             case R.id.rate:
                 if (userModel!=null)
                 {
@@ -306,7 +314,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void navigateToBalanceActivity() {
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(this, ChargeActivity.class);
+            Intent intent = new Intent(this, BalanceActivity.class);
             startActivity(intent);
         },200);
 
@@ -321,6 +329,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void navigateToContactUsActivity() {
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(this, ContactUsActivity.class);
+            startActivity(intent);
+        },200);
+
+    }
+    private void navigateTermsActivity() {
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(this, TermsActivity.class);
+            startActivity(intent);
+        },200);
+
+    }
+    private void navigateToAboutActivity() {
         new Handler().postDelayed(() -> {
             Intent intent = new Intent(this, ContactUsActivity.class);
             startActivity(intent);

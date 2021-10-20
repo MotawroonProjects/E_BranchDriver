@@ -1,6 +1,7 @@
 package com.creative.share.apps.e_branchdriver.activities_fragments.activity_balance;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.creative.share.apps.e_branchdriver.R;
+import com.creative.share.apps.e_branchdriver.activities_fragments.activity_charge.ChargeActivity;
 import com.creative.share.apps.e_branchdriver.adapters.ChargeAdapter;
 import com.creative.share.apps.e_branchdriver.databinding.ActivityBalanceBinding;
 import com.creative.share.apps.e_branchdriver.interfaces.Listeners;
@@ -66,7 +68,11 @@ public class BalanceActivity extends AppCompatActivity implements Listeners.Back
         adapter = new ChargeAdapter(copunModelList,this);
         binding.recView.setLayoutManager(new LinearLayoutManager(this));
         binding.recView.setAdapter(adapter);
-        binding.btnCharge.setOnClickListener(view -> finish());
+        binding.btnCharge.setOnClickListener(view ->{
+                    Intent intent = new Intent(BalanceActivity.this, ChargeActivity.class);
+                    startActivity(intent);
+                }
+               );
         getBalance();
 
     }

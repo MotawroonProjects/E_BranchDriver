@@ -6,6 +6,8 @@ public class CopunModel implements Serializable {
     private int id;
     private String user_id;
     private String coupon_id;
+    private String created_at;
+
     private Copun coupon;
 
     public int getId() {
@@ -22,6 +24,10 @@ public class CopunModel implements Serializable {
 
     public Copun getCopun() {
         return coupon;
+    }
+
+    public String getCreated_at() {
+        return created_at;
     }
 
     public class Copun implements Serializable

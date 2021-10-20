@@ -1,5 +1,7 @@
 package com.creative.share.apps.e_branchdriver.activities_fragments.activity_order_details.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,6 +83,13 @@ public class Fragment_Store_Order_Details extends Fragment implements OnMapReady
         initMap();
 
 
+        binding.llCall.setOnClickListener(view ->
+        {
+
+            String phone = orderModel.getMarket().getPhone_code().replaceFirst("00", "+") + orderModel.getMarket().getPhone();
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+            startActivity(intent);
+        });
 
     }
 
